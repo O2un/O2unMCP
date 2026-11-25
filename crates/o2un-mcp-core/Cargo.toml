@@ -1,0 +1,19 @@
+[package]
+name = "o2un-mcp-core"
+version = "0.1.0"
+description = "O2unMCP 서버들이 공유하는 뼈대: 실행, 설정, 에러, 로그, 테스트 도우미"
+edition.workspace = true
+publish.workspace = true
+repository.workspace = true
+
+[features]
+# 같은 프로세스 안에서 클라이언트-서버를 잇는 테스트 도우미. 서버는 dev-dependency에서만 켠다.
+testing = ["rmcp/client", "dep:serde_json"]
+
+[dependencies]
+rmcp.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+thiserror.workspace = true
+serde_json = { workspace = true, optional = true }
