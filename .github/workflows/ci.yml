@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # rust-toolchain.toml에 적힌 stable + rustfmt/clippy를 설치한다.
+      - name: Toolchain
+        run: rustup toolchain install
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: fmt
+        run: cargo fmt --all --check
+
+      - name: clippy
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+
+      - name: test
+        run: cargo test --workspace --locked
+
+      - name: build (release)
+        run: cargo build --workspace --release --locked
+
+      # 템플릿으로 만든 서버가 수정 없이 통과하는지 확인한다.
+      - name: template (xtask new-server demo)
+        shell: bash
+        run: |
+          cargo xtask new-server demo
+          cargo fmt --all --check
+          cargo clippy -p o2un-mcp-demo --all-targets -- -D warnings
+          cargo test -p o2un-mcp-demo
+          # 하이픈 이름 변환(크레이트·타입·환경변수 이름)도 확인한다.
+          cargo xtask new-server multi-word
+          cargo fmt --all --check
+          cargo test -p o2un-mcp-multi-word
