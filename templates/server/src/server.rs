@@ -34,7 +34,7 @@ impl {{Type}}Server {
 
     #[tool(description = "Greet `name` with the configured greeting.")]
     fn hello(&self, Parameters(params): Parameters<HelloParams>) -> ToolResult<String> {
-        hello::run(&self.config, params)
+        hello::handle(&self.config, params)
     }
 }
 

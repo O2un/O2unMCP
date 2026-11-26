@@ -20,7 +20,7 @@ pub struct PingParams {
 /// `ping` 도구 본체.
 ///
 /// 길이 제한은 LLM이 아니라 도구가 결정적으로 판정한다 (설계 원칙 3의 예시).
-pub fn run(config: &Config, params: PingParams) -> ToolResult<String> {
+pub fn handle(config: &Config, params: PingParams) -> ToolResult<String> {
     match params.message {
         None => Ok(config.reply.clone()),
         Some(message) => {
@@ -44,7 +44,7 @@ mod tests {
         let params = PingParams {
             message: Some("hi".into()),
         };
-        assert_eq!(run(&Config::default(), params).unwrap(), "pong: hi");
+        assert_eq!(handle(&Config::default(), params).unwrap(), "pong: hi");
     }
 
     #[test]
@@ -52,6 +52,6 @@ mod tests {
         let params = PingParams {
             message: Some("가".repeat(MAX_MESSAGE_CHARS)),
         };
-        assert!(run(&Config::default(), params).is_ok());
+        assert!(handle(&Config::default(), params).is_ok());
     }
 }

@@ -14,7 +14,7 @@ pub struct HelloParams {
 }
 
 /// `hello` 도구 본체. 빈 이름은 도구가 결정적으로 거절한다.
-pub fn run(config: &Config, params: HelloParams) -> ToolResult<String> {
+pub fn handle(config: &Config, params: HelloParams) -> ToolResult<String> {
     let name = params.name.trim();
     if name.is_empty() {
         return Err(ToolError::new("name must not be empty"));

@@ -38,7 +38,7 @@ cargo test -p o2un-mcp-excel-data
 1. `Cargo.toml`의 `description`
 2. `src/config.rs`: 예시 `greeting`을 지우고 필요한 설정을 넣는다. 값 검증 예시는 `servers/ping/src/config.rs`. 설정이 없으면 `Config`를 비워 둔다.
 3. `src/tools/`: `hello.rs`를 지우고 도구마다 파일 하나. 입력 구조체의 필드 `///` 주석은 입력 스키마 설명이 된다.
-4. `src/server.rs`: 도구 메서드를 `#[tool(description = "...")]`로 추가하고, 본문은 `tools::x::run(..)` 호출만 둔다. `INSTRUCTIONS`에 호출 순서를 쓴다.
+4. `src/server.rs`: 도구 메서드를 `#[tool(description = "...")]`로 추가하고, 본문은 `tools::x::handle(..)` 호출만 둔다. `INSTRUCTIONS`에 호출 순서를 쓴다.
 5. `tests/server.rs`: 도구마다 정상 1개, 오류(`is_error`) 1개 이상.
 
 ## 4. 확인

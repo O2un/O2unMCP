@@ -37,7 +37,7 @@ impl PingServer {
         description = "Reply with the configured text (default \"pong\"), followed by `message` if given."
     )]
     fn ping(&self, Parameters(params): Parameters<PingParams>) -> ToolResult<String> {
-        ping::run(&self.config, params)
+        ping::handle(&self.config, params)
     }
 }
 
